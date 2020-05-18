@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {authenticateUser} from '../../actions/authenticateUser';
 import { CONSTANTS } from '../../constants'
 import { connect } from 'react-redux';
 
-class LoginPage extends Component {
+class LoginPage extends PureComponent {
     constructor(props) {
       super(props);
       this.state = {username:'', password:'', error:''};
@@ -35,6 +35,9 @@ class LoginPage extends Component {
             ?this.setState({error: CONSTANTS.LOGIN_ERROR})
             :this.setState({error: ''});
         }
+        if(user.name){
+            this.props.onLogin();
+;        }
     }
   
     render() {

@@ -1,11 +1,11 @@
 import { call, take, put } from 'redux-saga/effects';
 import { types } from '../actions';
 import { authenticationService }  from '../services/authenticationService';
-import { CONSTANTS } from '../constants';
+import { LOGIN_ERROR } from '../constants';
 
 export default function* authenticateUserSaga(payload) {
     const {username, password} = payload;
-    const response = yield call(authenticationService, { username, password })
+    const response = yield call(authenticationService, { username })
     if(response){
       const user = response.results[0];
       if (user['name'] === username && user['birth_year'] === password) {
@@ -15,8 +15,7 @@ export default function* authenticateUserSaga(payload) {
       }
       else
       {
-        const error = CONSTANTS.LOGIN_ERROR;
-        yield put({ type: types.AUTHENTICATE_ERROR, error });
+        yield put({ type: types.AUTHENTICATE_ERROR, LOGIN_ERROR });
       }
         
     }

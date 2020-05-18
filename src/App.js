@@ -1,25 +1,15 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
 import LoginPage from './components/LoginPage';
+import SearchPage from './components/SearchPage';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   return (
     <div className="App">
-      <Router>
-        <Switch>
-            <Route path="/">
-              <LoginPage />
-            </Route>
-            <Route path="/public">
-              <h1>public page</h1>
-            </Route>
-        </Switch>
-      </Router>
+        {!isLoggedIn && <LoginPage onLogin={() =>setIsLoggedIn(true)}/>}
+        {isLoggedIn && <SearchPage />}
     </div>
   );
 }
