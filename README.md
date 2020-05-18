@@ -7,4 +7,5 @@ password: 19BBY
 
 Both are case sensitive.
 
+Happy Exploring Galaxies
 
