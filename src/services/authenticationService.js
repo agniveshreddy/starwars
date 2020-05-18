@@ -7,7 +7,6 @@ export const authenticationService = ({username}) => {
           return response.json();
         })  
         .then(json => {
-          console.log('json: '+ JSON.stringify(json));
           return json;
         })
   };

@@ -1,11 +1,11 @@
 import { types } from '../actions';
 
 export default function(state = {}, action) {
-  const { planets, error } = action;
+  const { planetDetails, error } = action;
   switch(action.type) {
-    case types.SEARCH_PLANETS_SUCCESS:
-      return [ ...planets ];
-    case types.SEARCH_PLANETS_ERROR:
+    case types.PLANET_DETAILS_SUCCESS:
+      return { ...planetDetails };
+    case types.PLANET_DETAILS_ERROR:
       return { error };
     default:
       return state;

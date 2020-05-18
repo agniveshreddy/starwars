@@ -1,4 +1,4 @@
-export const searchPlanetsService = ({api}) => {
+export const planetDetailsService = ({api}) => {
     return fetch(api)
         .then(response => {
           return response.json();
@@ -6,4 +6,4 @@ export const searchPlanetsService = ({api}) => {
         .then(json => {
           return json;
         })
-  };
+};

@@ -36,8 +36,8 @@ class LoginPage extends PureComponent {
             :this.setState({error: ''});
         }
         if(user.name){
-            this.props.onLogin();
-;        }
+            this.props.history.push('/search');
+        }
     }
   
     render() {

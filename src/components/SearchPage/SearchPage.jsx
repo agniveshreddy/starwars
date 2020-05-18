@@ -1,18 +1,31 @@
 import React, {PureComponent} from 'react';
-import {searchPlanets} from '../../actions/searchPlanets';
+import { searchPlanets, getPlanetInfo } from '../../actions/PlanetActions';
 import { connect } from 'react-redux';
 import Planet from '../Planet';
+import {types} from '../../actions';
 
 class SearchPage extends PureComponent {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.onPlanetClick = this.onPlanetClick.bind(this);
     }
 
     handleChange(event) {
         const {value} = event.target;
-        if(value!= '')
-            this.props.dispatch(searchPlanets(value));
+        this.props.dispatch(searchPlanets(value));
+    }
+
+    onPlanetClick(planetName){
+        console.log('on planet click called');
+        this.props.dispatch(getPlanetInfo(planetName));
+    }
+
+    componentDidUpdate(){
+        const {planetDetails}  = this.props;
+        if(planetDetails && planetDetails.name){
+            this.props.history.push('/planet');
+        }
     }
 
     render() {
@@ -20,20 +33,29 @@ class SearchPage extends PureComponent {
         return(
             <>
             <input onChange={this.handleChange}/>
-            {(planets && planets.length>0)
-            ?planets.map(planet => {
+            {planets && 
+            (planets.length>0
+            ?planets.map((planet, i) => {
                 return (
-                    <Planet name={planet.name} 
-                        onClick={()=>this.props.dispatch({type:'Get planet info'})}
+                    <Planet 
+                        name={planet.name}
+                        key={i}
+                        onClick={() => this.onPlanetClick(planet.name)}
                     />
                 );
             })
-            :<div>Not found</div>}
+            :<div>{planets.error}</div>)}
             </>
         );
     }
 }
 
-const mapStateToProps = planets => planets;
+//const mapStateToProps = ({planets, planetDetails}) => {planets, planetDetails};
+function mapStateToProps(state) {
+    return {
+      planets: state.planets,
+      planetDetails: state.planetDetails,
+    }
+  }
 
 export default connect(mapStateToProps)(SearchPage);

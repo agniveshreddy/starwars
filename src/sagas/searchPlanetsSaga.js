@@ -8,8 +8,11 @@ import { api } from '../api';
 export default function* searchPlanetsSaga(payload) {
     let {searchString} = payload;
     let planets =[];
-    
     let response;
+    if(searchString === ''){
+        yield put({ type: types.SEARCH_PLANETS_SUCCESS, planets:[] });
+        return;
+    }
     do{
         const SEARCH_PLANETS_API = (response && response.next)?response.next:(api.SEARCH_PLANETS+ searchString);
         response = yield call(searchPlanetsService, { api:SEARCH_PLANETS_API });
@@ -23,6 +26,6 @@ export default function* searchPlanetsSaga(payload) {
         yield put({ type: types.SEARCH_PLANETS_SUCCESS, planets });
     }
     else {
-        yield put({ type: types.SEARCH_PLANETS_ERROR, NO_PLANETS_FOUND});
+        yield put({ type: types.SEARCH_PLANETS_ERROR, error:NO_PLANETS_FOUND});
     }
 }

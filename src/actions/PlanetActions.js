@@ -6,3 +6,10 @@ export const searchPlanets = (searchString) => {
         searchString
     }
 };
+
+export const getPlanetInfo = (planetName) => {
+    return {
+        type: types.GET_PLANET_INFO,
+        planetName
+    }
+};
