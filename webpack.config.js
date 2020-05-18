@@ -39,7 +39,10 @@ module.exports = {
           exclude: /(node_modules)/,
           use:[
             {
-              loader: 'css-loader'
+              loader: 'style-loader',
+            },
+            {
+              loader: 'css-loader',
             },
             {
               loader: 'sass-loader'

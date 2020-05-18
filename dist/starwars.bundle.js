@@ -38990,10 +38990,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     case !(function webpackMissingModule() { var e = new Error("Cannot find module 'actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).AUTHENTICATE_USER:
       return _objectSpread(_objectSpread({}, state), response);
 
-    case !(function webpackMissingModule() { var e = new Error("Cannot find module 'actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).AUTHENTICATE_SUCCESS:
+    case !(function webpackMissingModule() { var e = new Error("Cannot find module 'actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).LOGIN_SUCCESS:
       return _objectSpread(_objectSpread({}, state), response);
 
-    case !(function webpackMissingModule() { var e = new Error("Cannot find module 'actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).AUTHENTICATE_ERROR:
+    case !(function webpackMissingModule() { var e = new Error("Cannot find module 'actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).LOGIN_ERROR:
       return reponse;
 
     default:

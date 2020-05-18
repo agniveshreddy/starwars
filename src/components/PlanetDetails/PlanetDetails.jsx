@@ -1,10 +1,13 @@
 import React, {memo} from 'react';
 import { connect } from 'react-redux';
+import Table from 'react-bootstrap/Table';
+import './PlanetDetails.scss';
+import Container from 'react-bootstrap/Container';
 
 const PlanetDetails = ({planetDetails}) => {
-    return(<div>
-        planet Details
-        <table>
+    return(<Container>
+        <h1>Planet Details</h1>
+        <Table striped bordered hover>
             <tbody> 
             {Object.entries(planetDetails).map(([key, val], i) => 
             <tr key={i}>
@@ -15,8 +18,8 @@ const PlanetDetails = ({planetDetails}) => {
             </tr>
             )}
             </tbody>
-        </table>
-        </div>);
+        </Table>
+        </Container>);
 };
 
 const mapStateToProps = planetDetails => planetDetails;

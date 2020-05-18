@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import './App.css';
+import './App.scss';
 import LoginPage from './components/LoginPage';
 import SearchPage from './components/SearchPage';
 import PlanetDetails from './components/PlanetDetails';
@@ -15,7 +15,7 @@ function App() {
     </div>
 */
     <Router>
-    <div>
+    <div className='App'>
       <Route exact path="/" component={LoginPage}/>
       <Route path="/search" component={SearchPage}/>
       <Route path="/planet" component={PlanetDetails}/>

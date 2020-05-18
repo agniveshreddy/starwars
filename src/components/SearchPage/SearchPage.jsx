@@ -2,13 +2,18 @@ import React, {PureComponent} from 'react';
 import { searchPlanets, getPlanetInfo } from '../../actions/PlanetActions';
 import { connect } from 'react-redux';
 import Planet from '../Planet';
-import {types} from '../../actions';
+import Legend from '../Legend';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import {DARK_GRAY, GRAY, SILVER, LIGHT_GRAY, GAINS_BORO, RED} from '../../constants';
+import './SearchPage.scss'; 
 
 class SearchPage extends PureComponent {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.onPlanetClick = this.onPlanetClick.bind(this);
+        this.classifyClassName = this.classifyClassName.bind(this);
     }
 
     handleChange(event) {
@@ -17,8 +22,25 @@ class SearchPage extends PureComponent {
     }
 
     onPlanetClick(planetName){
-        console.log('on planet click called');
         this.props.dispatch(getPlanetInfo(planetName));
+    }
+
+    classifyClassName(population){
+        const pop = Number(population);
+        switch(true){
+            case (pop >= 21000000000):
+                return  DARK_GRAY;
+            case (pop <= 21000000000 && pop >= 4000000000):
+                return  GRAY;
+            case (pop <= 4000000000 && pop >= 1000000000):
+                return SILVER;
+            case (pop <= 1000000000 && pop >= 400000000):
+                return LIGHT_GRAY;
+            case (pop <= 400000000 && pop >= 0):
+                return GAINS_BORO;
+            default: 
+                return RED;
+        }
     }
 
     componentDidUpdate(){
@@ -31,21 +53,26 @@ class SearchPage extends PureComponent {
     render() {
         const {planets} = this.props
         return(
-            <>
-            <input onChange={this.handleChange}/>
-            {planets && 
-            (planets.length>0
-            ?planets.map((planet, i) => {
-                return (
-                    <Planet 
-                        name={planet.name}
-                        key={i}
-                        onClick={() => this.onPlanetClick(planet.name)}
-                    />
-                );
-            })
-            :<div>{planets.error}</div>)}
-            </>
+            <Container>
+                <div className='searchBar'>
+                    <Form.Control onChange={this.handleChange}/>
+                    {planets && 
+                    (planets.length>0
+                    ?planets.map((planet, i) => {
+                        const className = this.classifyClassName(planet.population);
+                        return (
+                            <Planet 
+                                className={className}
+                                name={planet.name}
+                                key={i}
+                                onClick={() => this.onPlanetClick(planet.name)}
+                            />
+                        );
+                    })
+                    :<div>{planets.error}</div>)}
+                </div>
+                <Legend/>
+            </Container>
         );
     }
 }

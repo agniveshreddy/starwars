@@ -1,7 +1,10 @@
 import React, {PureComponent} from 'react';
 import {authenticateUser} from '../../actions/authenticateUser';
-import { CONSTANTS } from '../../constants'
+import { LOGIN_ERROR } from '../../constants'
 import { connect } from 'react-redux';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 class LoginPage extends PureComponent {
     constructor(props) {
@@ -24,16 +27,14 @@ class LoginPage extends PureComponent {
         if(username!='' && password!='')
             this.props.dispatch(authenticateUser(username, password));
         else
-            this.setState({error: CONSTANTS.LOGIN_ERROR})
+            this.setState({error: LOGIN_ERROR})
         event.preventDefault();
     }
 
     componentDidUpdate(prevProps, prevState){
         const {user} = this.props;
         if( user.error && (user.error != prevState.error)){
-            (user.error === '')
-            ?this.setState({error: CONSTANTS.LOGIN_ERROR})
-            :this.setState({error: ''});
+            this.setState({error: LOGIN_ERROR})
         }
         if(user.name){
             this.props.history.push('/search');
@@ -42,22 +43,32 @@ class LoginPage extends PureComponent {
   
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    username:
-                    <input type='text' 
-                        name='username' 
-                        onChange={this.handleChange} />
-                </label>
-                <label>
-                    password:
-                    <input type="text" 
-                    name='password'
-                    onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-                {this.state.error}
-            </form>
+            <Container>
+                <h1>Galaxy Database</h1>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Group>
+                        <Form.Label>username:</Form.Label>
+                        <Form.Control type='text' 
+                            required
+                            name='username' 
+                            onChange={this.handleChange} 
+                            placeholder="Enter username"/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>password:</Form.Label>
+                        <Form.Control type="text" 
+                            required
+                            name='password'
+                            onChange={this.handleChange} 
+                            placeholder="Enter password"/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Button type="submit" variant="primary">Submit</Button>
+                    </Form.Group>
+                    
+                    <Form.Label>{this.state.error}</Form.Label>
+                </Form>
+            </Container>
         );
     }
 }

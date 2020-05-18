@@ -8,14 +8,19 @@ export default function* authenticateUserSaga(payload) {
     const response = yield call(authenticationService, { username })
     if(response){
       const user = response.results[0];
-      if (user['name'] === username && user['birth_year'] === password) {
-        yield put({ type: types.AUTHENTICATE_SUCCESS, user });
-        yield take('LOGOUT')
-        //yield call(Api.clearItem, 'token')
+      try{
+        if (user['name'] === username && user['birth_year'] === password) {
+          yield put({ type: types.LOGIN_SUCCESS, user });
+          yield take('LOGOUT')
+          //yield call(Api.clearItem, 'token')
+        }
+        else
+        {
+          yield put({ type: types.LOGIN_ERROR, error:LOGIN_ERROR });
+        }
       }
-      else
-      {
-        yield put({ type: types.AUTHENTICATE_ERROR, LOGIN_ERROR });
+      catch(error){
+        yield put({ type: types.LOGIN_ERROR, error:LOGIN_ERROR });
       }
         
     }

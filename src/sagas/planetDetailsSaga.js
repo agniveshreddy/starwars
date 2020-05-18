@@ -15,7 +15,6 @@ export default function* planetDetailsSaga(payload) {
         yield put({ type: types.PLANET_DETAILS_ERROR, error:'' });
     } 
     catch(error) {
-      console.log('error: '+ JSON.stringify(error));
       yield put({ type: types.PLANET_DETAILS_ERROR, error })
     }
 }
